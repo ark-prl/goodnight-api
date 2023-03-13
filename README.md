@@ -8,6 +8,7 @@
 ## Additional Functions
 * Included seed data
 * Returns a message after a successful clockout
+* Returns a message after following a user
 * Return error messages for the following cases:
   * User tries to clockin while there is an incomplete sleep (has clockin without clockout)
   * User tries to clockout without a clockin
@@ -17,11 +18,11 @@
   * User tries to get the sleeps of a user they are not currently following
   * Invalid user IDs are used on the endpoints
 
-## Runtime requirements:
+## Runtime requirements
 * Ruby version `3.2.1` installed
 * Rails version `7.0.4.2` installed
 
-## Starting the API:
+## Starting the API
 * After downloading/cloning, open a terminal, `cd` into project directory and run `bundle install`
 * Create the database. Run `rails db:create`
 * Run the migrations. Run `rails db:migrate`
