@@ -1,24 +1,27 @@
-# README
+# Goodnight API
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Functions
+1. Clock In operation, and return all clocked-in times, ordered by created time.
+2. Users can follow and unfollow other users.
+3. See the sleep records over the past week for their friends, ordered by the length of their sleep.
 
-Things you may want to cover:
+## Runtime requirements:
+* Ruby version `3.2.1` installed
+* Rails version `7.0.4.2` installed
 
-* Ruby version
+## Starting the API:
+* After downloading/cloning, open a terminal, `cd` into project directory and run `bundle install`
+* Create the database. Run `rails db:create`
+* Run the migrations. Run `rails db:migrate`
+* Seed the database. Run `rails db:seed`
+  * All seeded `Users` have `Sleeps` but not all are following other `Users`
+* Start the server. Run `rails s`
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## API Endpoints
+* (GET) `/users`
+* (GET) `/users/:id`
+* (POST) `/sleeps/:user_id/clockin`
+* (PUT) `/sleeps/:user_id/clockout`
+* (POST) `/users/:user_id/follow?user_id=:user_id`
+* (DELETE) `/users/:user_id/unfollow?user_id=:user_id`
+* (GET) `/users/:user_id/following?user_id=:user_id`
