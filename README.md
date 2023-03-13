@@ -1,9 +1,21 @@
 # Goodnight API
 
-## Functions
+## Primary Functions
 1. Clock In operation, and return all clocked-in times, ordered by created time.
 2. Users can follow and unfollow other users.
 3. See the sleep records over the past week for their friends, ordered by the length of their sleep.
+
+## Additional Functions
+* Included seed data
+* Returns a message after a successful clockout
+* Return error messages for the following cases:
+  * User tries to clockin while there is an incomplete sleep (has clockin without clockout)
+  * User tries to clockout without a clockin
+  * User tries to follow the same user more than once
+  * User tries to unfollow a user not currently being followed
+  * User tries to follow themselves
+  * User tries to get the sleeps of a user they are not currently following
+  * Invalid user IDs are used on the endpoints
 
 ## Runtime requirements:
 * Ruby version `3.2.1` installed

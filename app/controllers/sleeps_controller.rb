@@ -26,6 +26,8 @@ class SleepsController < ApplicationController
 
   def set_user
     @user = User.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    render json: "#{params[:id]} is not a valid User ID"
   end
 
   def set_pending_clockout

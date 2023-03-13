@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i[show follow unfollow following update destroy]
-  before_action :set_followed_user, only: %i[follow unfollow]
+  before_action :set_followed_user, only: %i[follow unfollow following]
 
   # # GET /users
   def index
@@ -15,7 +15,7 @@ class UsersController < ApplicationController
   end
 
   def follow
-    @follow = Follow.new(from_user_id: @user.id, to_user_id: params[:user_id])
+    @follow = Follow.new(from_user_id: @user.id, to_user_id: @followed_user.id)
     if @follow.save
       render json: "#{@user.name} followed #{@followed_user.name}.", status: :created
     else
@@ -26,20 +26,19 @@ class UsersController < ApplicationController
   end
 
   def unfollow
-    @follow = Follow.where(from_user_id: @user.id, to_user_id: params[:user_id])
+    @follow = Follow.where(from_user_id: @user.id, to_user_id: @followed_user.id)
     if @follow.exists?
       @follow.first.destroy
-      render json: "#{@user.name} unfollowed #{@followed_user.name}."
+      head :no_content
     else
       render json: @follow.errors, status: :unprocessable_entity
     end
-  rescue StandardError
+  rescue NoMethodError
     render json: "#{@user.name} does not follow #{@followed_user.name}.", status: :unprocessable_entity
   end
 
   def following
-    @followed_user = User.find(params[:user_id])
-    if @user.follows?(params[:user_id])
+    if @user.follows?(@followed_user.id)
       render json: @followed_user, include: ['sleeps_last_week']
     else
       render json: "#{@user.name} is not following #{@followed_user.name}", status: :unprocessable_entity
@@ -76,14 +75,18 @@ class UsersController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_user
     @user = User.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    render json: "#{params[:id]} is not a valid User ID"
+  end
+
+  def set_followed_user
+    @followed_user = User.find(params[:user_id])
+  rescue ActiveRecord::RecordNotFound
+    render json: "#{params[:user_id]} is not a valid User ID"
   end
 
   # Only allow a list of trusted parameters through.
   def user_params
     params.require(:user).permit(:name)
-  end
-
-  def set_followed_user
-    @followed_user = User.find(params[:user_id])
   end
 end
