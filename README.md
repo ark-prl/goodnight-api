@@ -33,8 +33,8 @@
 ## API Endpoints
 * (GET) `/users`
 * (GET) `/users/:id`
-* (POST) `/sleeps/:user_id/clockin`
+* (POST) `/sleeps/:user_id/clockin` - Primary function 1
 * (PUT) `/sleeps/:user_id/clockout`
-* (POST) `/users/:user_id/follow?user_id=:user_id`
-* (DELETE) `/users/:user_id/unfollow?user_id=:user_id`
-* (GET) `/users/:user_id/following?user_id=:user_id`
+* (POST) `/users/:user_id/follow?user_id=:user_id`  - Primary function 2
+* (DELETE) `/users/:user_id/unfollow?user_id=:user_id` - Primary function 2
+* (GET) `/users/:user_id/following?user_id=:user_id` - Primary function 3
